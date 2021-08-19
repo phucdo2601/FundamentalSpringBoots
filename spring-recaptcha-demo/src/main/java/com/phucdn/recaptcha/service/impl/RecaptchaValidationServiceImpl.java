@@ -14,7 +14,7 @@ public class RecaptchaValidationServiceImpl implements RecaptchaValidationServic
 			"https://www.google.com/recaptcha/api/siteverify";
 	
 	private final String RECAPTCHA_SERCRET = 
-			"6LdLGLAaAAAAAGwZS33Z4agBJf5WDxYlzMkW6HA_";
+			"YOUR_SECRET_RECAPTCHA_CODE";
 	
 	@Override
 	public boolean validateCaptcha(String captchaResponse) {
