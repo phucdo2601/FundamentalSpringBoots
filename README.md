@@ -372,8 +372,7 @@ GET http://localhost:8080/api/v1/todo/11
 Ở đây, đối tượng 11 không tồn tại trong danh sách, chúng ta sẽ trả về lỗi cho phía Client.
  
 # Ảnh minh họa:
-    ![success](https://user-images.githubusercontent.com/65969192/132095945-746cc431-603f-4937-a151-2d84963c808a.png)
-    ![error](https://user-images.githubusercontent.com/65969192/132095942-62984969-76c1-48f4-ab5c-4f19f133be9f.png)
+    
 
 
  
