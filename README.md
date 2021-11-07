@@ -1,5 +1,229 @@
 # FundamentalSpringBoots
 
+# @RequestMapping
+    @RequestMapping  là một trong những annoation sử dụng nhiều nhất trong Spring MVC.
+    Annotation @RequestMapping được sử dụng để map request với class hoặc method xử lý request đó.
+    @RequestMapping có thể được áp dụng với controller class hoặc method trong controller class.
+    1.1 @RequestMapping với class:
+    •	@Controller
+    •	@RequestMapping("/index")
+    •	public class BaseController {
+    •	
+    •	public String index() {
+    •	return "index";
+    •	}
+    •	
+    •	}
+    •Class BaseController sẽ đóng vai trò như là 1 class Servlet xử lý URL “/index”
+    1.2 @RequestMapping với method:
+    •	@Controller
+    •	public class HomeController {
+    •	
+    •	@RequestMapping("/method0")
+    •	public String method0() {
+    •	return "page0";
+    •	}
+    •	
+    •	@RequestMapping("/method1")
+    •	public String method1() {
+    •	return "page1";
+    •	}
+    •	}
+    •Class HomeController sẽ xử lý 2 URL là “/method1”, “/method2”.
+    1.3 @RequestMapping với nhiều URI:
+    •	@RequestMapping(value = { "/", "/home" })
+    •	public String home() {
+    •	return "home";
+    •	}
+    •Method home()Sẽ xử lý cả 2 URL “/” và “/home”
+    1.4 @RequestMapping với HTTP Method:
+    •	@RequestMapping(value="/test", method = RequestMethod.GET)
+    •	public String doGet() {
+    •	return "test1";
+    •	}
+    •	
+    •	@RequestMapping(value="/test", method = RequestMethod.POST)
+    •	public String doPost() {
+    •	return "test2";
+    •	}
+    •Cùng là 1 URL “/test” nhưng request tới có method là GET sẽ được xử lý bởi method doGet() còn request có method là POST sẽ được xử lý bởi method doPost().
+    Nếu không chỉ rõ HTTP method thì mặc định controller sẽ xử lý tất cả các HTTP method.
+    1.5 @RequestMapping với Header:
+    •	@RequestMapping(value = "/method0", headers = "name=kai")
+    •	public String method0() {
+    •	return "page0";
+    •	}
+    •	
+    •	@RequestMapping(value = "/method1", headers = { "name=kai", "id=1" })
+    •	public String method1() {
+    •	return "page1";
+    •	}
+    •Khi chỉ rõ headers trong @RequestMapping thì nó sẽ chỉ xử lý những request có header chứa các tham số đã chỉ rõ
+    •Ví dụ như method0() sẽ chỉ xử lý request có header chứa cặp key-value là name-kai
+    •1.6 @RequestMapping với Produces và Consumes:
+    •	@RequestMapping(value = "/method2", produces = { "application/json", "application/xml" }, consumes = "text/html")
+    •	public String method2() {
+    •	return "page2";
+    •	}
+    consumes: chỉ chấp nhận các request có content-type giống với giá trị khai báo bên trong consumes
+    produces: kiểu dữ liệu trả về, cái này thường chỉ dùng với các REST-API.
+    2.Code Ví dụ
+    Thư viện sử dụng
+    •	pom.xml
+    •	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    •	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    •	<modelVersion>4.0.0</modelVersion>
+    •	<groupId>stackjava.com</groupId>
+    •	<artifactId>SpringAnnotation1</artifactId>
+    •	<version>0.0.1-SNAPSHOT</version>
+    •	<packaging>war</packaging>
+    •	
+    •	<properties>
+    •	<spring.version>5.0.2.RELEASE</spring.version>
+    •	</properties>
+    •	<dependencies>
+    •	<dependency>
+    •	<groupId>org.springframework</groupId>
+    •	<artifactId>spring-webmvc</artifactId>
+    •	<version>${spring.version}</version>
+    •	</dependency>
+    •	</dependencies>
+    •	</project>
+    Controller:
+    •	BaseController.java
+    •	package stackjava.com.springmvchello.controller;
+    •	
+    •	import org.springframework.stereotype.Controller;
+    •	import org.springframework.web.bind.annotation.RequestMapping;
+    •	
+    •	@Controller
+    •	@RequestMapping("/index")
+    •	public class BaseController {
+    •	
+    •	public String index() {
+    •	return "index";
+    •	}
+    •	
+    •	}
+    •	HomeController.java
+    •	package stackjava.com.springmvchello.controller;
+    •	
+    •	import org.springframework.stereotype.Controller;
+    •	import org.springframework.web.bind.annotation.RequestMapping;
+    •	import org.springframework.web.bind.annotation.RequestMethod;
+    •	
+    •	@Controller
+    •	public class HomeController {
+    •	
+    •	@RequestMapping(value = { "/", "/home" })
+    •	public String home() {
+    •	return "home";
+    •	}
+    •	
+    •	@RequestMapping(value = "/test", method = RequestMethod.GET)
+    •	public String doGet() {
+    •	return "test1";
+    •	}
+    •	
+    •	@RequestMapping(value = "/test", method = RequestMethod.POST)
+    •	public String doPost() {
+    •	return "test2";
+    •	}
+    •	
+    •	@RequestMapping(value = "/method0", headers = "name=kai")
+    •	public String method0() {
+    •	return "page0";
+    •	}
+    •	
+    •	@RequestMapping(value = "/method1", headers = { "name=kai", "id=1" })
+    •	public String method1() {
+    •	return "page1";
+    •	}
+    •	
+    •	@RequestMapping(value = "/method2", produces = { "application/json"}, consumes = "text/html")
+    •	public String method2() {
+    •	return "page2";
+    •	}
+    •	
+    •	}
+    Các file jsp:
+    •	home.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>home.jsp</h2>
+    •	<a href="home">/home</a> <br/>
+    •	<a href="test">/test (GET)</a> <br/>
+    •	<form method="post" action="test">
+    •	<button type="submit">/test (POST)</button>
+    •	</form>
+    •	</body>
+    •	</html>
+    •	index.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>index.jsp</h2>
+    •	</body>
+    •	</html>
+    •	test1.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>test1.jsp</h2>
+    •	</body>
+    •	</html>
+    •	test2.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>test2.jsp</h2>
+    •	</body>
+    •	</html>
+    •	page0.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>page0.jsp</h2>
+    •	</body>
+    •	</html>
+    •	page1.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>page1.jsp</h2>
+    •	</body>
+    •	</html>
+    •	page2.jsp
+    •	<html>
+    •	<head>
+    •	<title>Spring MVC Annotation</title>
+    •	</head>
+    •	
+    •	<body>
+    •	<h2>page2.jsp</h2>
+    •	</body>
+    •	</html>
+    Demo:
+
 
 # @RestController
 Khác với @Controller là sẽ trả về một template.
