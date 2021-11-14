@@ -599,7 +599,10 @@ GET http://localhost:8080/api/v1/todo/11
 ## Success:
 ![success](https://user-images.githubusercontent.com/65969192/132095993-806429ac-a410-4b94-bf31-a1fc065ae982.png)
 
-
+# Hướng dẫn sử dụng cơ bản, khai quát keyCloak với spring (Mình cũng đang học và luyện tập, nên có gì sai xót mong các bạn bỏ qua):
+    - Đầu tiên bạn hãy lên trang web của keycloak vài tải bản keycloak-server về theo đường dẫn https://www.keycloak.org/downloads
+    - Đối với máy chạy win: Tải về và giải nén, sau đó vô thu mục giải nén theo đường dẫn ../keycloak/bin và bật cmd lên rồi nhập câu lệnh: standalone.bat -Djboss.http.port=8180
+        để start server kecloak, sau đó bạn vô trình duyệt web nhập: localhost:8180/auth, rồi tạo tài khoản admin rồi bắt đầu khám phá
  
 # Kết
 Đây là một bài viết trong Series làm chủ Spring Boot, từ zero to hero
