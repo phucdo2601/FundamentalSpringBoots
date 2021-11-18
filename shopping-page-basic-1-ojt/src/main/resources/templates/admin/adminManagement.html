@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Mobile Store</title>
+<link rel="stylesheet"
+	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+
+
+<link th:href="@{/admin/css/adminItemPage.css}" rel="stylesheet">
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script th:src="@{https://kit.fontawesome.com/9d9680ff7c.js}"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<th:block th:include="/components/adminPage/header"></th:block> 
+	<!--/header-->
+
+	<div class="component" style="margin-top: 20px">
+		<div class="title">
+			<h1>ADMIN Management</h1>
+			<div class="card-group" style="margin-top: 20px; margin-bottom: 20px">
+				<div class="card">
+					<img class="card-img-top"
+						src="https://www.marketingtutor.net/wp-content/uploads/2018/06/what-is-a-product.jpg"
+						width="100px" height="100px" alt="Card image cap">
+					<div class="card-body">
+						<a th:href="@{/api/v1/admin/items}" class="card-title">
+							MManagement Items</a>
+						<p class="card-text">This is a wider card with supporting text
+							below as a natural lead-in to additional content. This content is
+							a little bit longer.</p>
+						<p class="card-text">
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</p>
+					</div>
+				</div>
+				<div class="card">
+					<img class="card-img-top"
+						src="https://www.studytienganh.vn/upload/2021/06/105605.png"
+						width="100px" height="100px" alt="Card image cap">
+					<div class="card-body">
+						<a th:href="@{/api/v1/admin/categories}" class="card-title">
+							MManagement Categories</a>
+						<p class="card-text">This card has supporting text below as a
+							natural lead-in to additional content.</p>
+						<p class="card-text">
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</p>
+					</div>
+				</div>
+				<div class="card">
+					<img class="card-img-top"
+						src="https://sansangduhoc.vn/wp-content/uploads/2017/06/ssdhhoctienganh.jpg"
+						width="100px" height="100px" alt="Card image cap">
+					<div class="card-body">
+						<a th:href="@{/api/v1/admin/discounts}" class="card-title">
+							MManagement Discounts</a>
+						<p class="card-text">This is a wider card with supporting text
+							below as a natural lead-in to additional content. This card has
+							even longer content than the first to show that equal height
+							action.</p>
+						<p class="card-text">
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</p>
+					</div>
+				</div>
+
+				<div class="card">
+					<img class="card-img-top"
+						src="https://ndgroup.vn/uploads/nguon-ban-hang-order-khong-can-von-1.png"
+						width="100px" height="100px" alt="Card image cap">
+					<div class="card-body">
+						<a th:href="@{/api/v1/admin/bookings}" class="card-title">
+							MManagement Orders</a>
+						<p class="card-text">This is a wider card with supporting text
+							below as a natural lead-in to additional content. This card has
+							even longer content than the first to show that equal height
+							action.</p>
+						<p class="card-text">
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+	<th:block th:include="/components/adminPage/footer"></th:block> 
+	<!--/Footer-->
+
+</body>
+</html>

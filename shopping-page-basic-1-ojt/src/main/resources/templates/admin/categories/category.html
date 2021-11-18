@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+
+
+<link th:href="@{/admin/css/adminCategoryPage.css}" rel="stylesheet">
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script th:src="@{https://kit.fontawesome.com/9d9680ff7c.js}"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<th:block th:include="/components/adminPage/header"></th:block>
+	<!--/header-->
+
+	<div class="component">
+		<div class="title">
+			<h1>Management Categories</h1>
+			<a th:href="@{/api/v1/admin/categories/addNewCategory}"
+				class="btn btn-primary">Add New Item</a>
+		</div>
+
+		<hr>
+
+		<th:block th:include="/components/adminPage/search"></th:block>
+		<!--/search-->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Category Id</th>
+					<th scope="col">Category Name</th>
+					<th scope="col">Date Of Create</th>
+
+					<th scope="col">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${listCategory != null}">
+					<tr th:each="dto : ${listCategory}">
+						<th:block th:if="${dto.status == true}">
+							<th scope="row"></th>
+							<td th:text="*{dto.cateId}"></td>
+							<td th:text="*{dto.cateName}"></td>
+							<td th:text="*{dto.dateOfCreate}"></td>
+
+							<td><a
+								th:href="@{'/api/v1/admin/categories/editCategory/' + ${dto.cateId}}"
+								class="btn btn-success" th:text="Edit"></a> <a
+								th:href="@{'/api/v1/admin/categories/deleteCategory/' + ${dto.cateId}}"
+								class="btn btn-warning" th:text="Delete"></a></td>
+						</th:block>
+					</tr>
+				</th:block>
+				
+				<th:block th:if="${aListSearchCategory != null}">
+					<tr th:each="dto : ${aListSearchCategory}">
+						<th:block th:if="${dto.status == true}">
+							<th scope="row"></th>
+							<td th:text="*{dto.cateId}"></td>
+							<td th:text="*{dto.cateName}"></td>
+							<td th:text="*{dto.dateOfCreate}"></td>
+
+							<td><a
+								th:href="@{'/api/v1/admin/categories/editCategory/' + ${dto.cateId}}"
+								class="btn btn-success" th:text="Edit"></a> <a
+								th:href="@{'/api/v1/admin/categories/deleteCategory/' + ${dto.cateId}}"
+								class="btn btn-warning" th:text="Delete"></a></td>
+						</th:block>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+
+	<th:block th:include="/components/adminPage/footer"></th:block>
+	<!--/Footer-->
+
+</body>
+</html>

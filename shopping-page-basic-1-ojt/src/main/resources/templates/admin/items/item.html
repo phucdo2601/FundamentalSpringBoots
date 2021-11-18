@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+
+
+<link th:href="@{/admin/css/adminItemPage.css}" rel="stylesheet">
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script th:src="@{https://kit.fontawesome.com/9d9680ff7c.js}"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<th:block th:include="/components/adminPage/header"></th:block>
+	<!--/header-->
+
+	<div th:if="${message != null}" class="alert alert-primary"
+		role="alert">
+		<i th:text="Them San Pham Thanh Cong"></i>
+	</div>
+
+	<div class="component">
+		<div class="title">
+			<h1>Management Items</h1>
+			<a th:href="@{/api/v1/admin/items/addNewItem}"
+				class="btn btn-primary">Add New Item</a>
+		</div>
+
+		<hr>
+
+		<th:block th:include="/components/adminPage/search"></th:block>
+		<!--/search-->
+
+		<select class="custom-select" style="width: 100px">
+			<option selected>Choose...</option>
+			<th:block th:each="dto : ${listCate}">
+				<option value="${dto.cateId}" th:text="${dto.cateName}"></option>
+			</th:block>
+		</select>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Item Id</th>
+					<th scope="col">Item Name</th>
+					<th scope="col">Item Image</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Price</th>
+					<th scope="col">Category Id</th>
+					<th scope="col">Item Status</th>
+					<th scope="col">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<th:block th:if="${listItem != null}">
+					<tr th:each="dto : ${listItem}">
+						<th:block th:if="${dto.status == 'Active'}">
+							<th scope="row"></th>
+							<td th:text="*{dto.itemId}"></td>
+							<td th:text="*{dto.itemName}"></td>
+							<td><img alt="" th:src="@{'/uploads/' +${dto.imgUrl}}"
+								width="50px" height="50px" th:alt="${dto.imgUrl}"></td>
+
+							<td th:text="*{dto.quantity}"></td>
+							<td th:text="*{dto.price}"></td>
+							<td th:text="*{dto.category.getCateId()}"></td>
+							<td style="color: green;"
+								th:text="*{dto.status == 'Active'? 'Commerce': 'Stopped'}">
+							</td>
+							<td><a
+								th:href="@{'/api/v1/admin/items/edit/' + ${dto.itemId}}"
+								class="btn btn-success" th:text="Edit"></a> <a
+								th:href="@{'/api/v1/admin/items/delete/' + ${dto.itemId}}"
+								class="btn btn-warning" th:text="Delete"></a></td>
+						</th:block>
+					</tr>
+				</th:block>
+
+				<th:block th:if="${aListSearchItem != null}">
+					<tr th:each="dto : ${aListSearchItem}">
+						<th:block th:if="${dto.status == 'Active'}">
+							<th scope="row"></th>
+							<td th:text="*{dto.itemId}"></td>
+							<td th:text="*{dto.itemName}"></td>
+							<td><img alt="" th:src="@{'/uploads/' +${dto.imgUrl}}"
+								width="50px" height="50px" th:alt="${dto.imgUrl}"></td>
+
+							<td th:text="*{dto.quantity}"></td>
+							<td th:text="*{dto.price}"></td>
+							<td th:text="*{dto.category.getCateId()}"></td>
+							<td style="color: green;"
+								th:text="*{dto.status == 'Active'? 'Commerce': 'Stopped'}">
+							</td>
+							<td><a
+								th:href="@{'/api/v1/admin/items/edit/' + ${dto.itemId}}"
+								class="btn btn-success" th:text="Edit"></a> <a
+								th:href="@{'/api/v1/admin/items/delete/' + ${dto.itemId}}"
+								class="btn btn-warning" th:text="Delete"></a></td>
+						</th:block>
+					</tr>
+				</th:block>
+				
+			</tbody>
+		</table>
+	</div>
+
+
+	<th:block th:include="/components/adminPage/footer"></th:block>
+	<!--/Footer-->
+</body>
+</html>

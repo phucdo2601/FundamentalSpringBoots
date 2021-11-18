@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Mobile Store</title>
+<link rel="stylesheet"
+	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+
+
+<link th:href="@{/admin/css/adminItemPage.css}" rel="stylesheet">
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script th:src="@{https://kit.fontawesome.com/9d9680ff7c.js}"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<th:block th:if="${listCategory != null || aListSearchCategory != null}">
+		<nav class="navbar navbar-light bg-light">
+			<form class="form-inline" th:action="@{/api/v1/admin/categories/searchById}" method="get">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search by category Id" name="categorySearch" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Category</button>
+			</form>
+		</nav>
+	</th:block>
+	
+	<th:block th:if="${listItem != null || aListSearchItem != null}">
+		<nav class="navbar navbar-light bg-light" >
+			<form class="form-inline" th:action="@{/api/v1/admin/items/searchById}" method="get">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search by item id" name="itemSearch" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search item</button>
+			</form>
+		</nav>
+	</th:block>
+	
+	<th:block th:if="${listDiscount != null || aListSearchDiscount != null}">
+		<nav class="navbar navbar-light bg-light">
+			<form class="form-inline" th:action="@{/api/v1/admin/discounts/searchById}" method="get">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search by discount id" name="discountSearch" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search discount</button>
+			</form>
+		</nav>
+	</th:block>
+	
+	<th:block th:if="${listBooking != null || aListSearchBooking != null}">
+		<nav class="navbar navbar-light bg-light">
+			<form class="form-inline" th:action="@{/api/v1/admin/bookings/searchById}" method="get">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search by booking id" name="bookingSearch" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search booking</button>
+			</form>
+		</nav>
+	</th:block>
+	
+	<th:block th:if="${listUser != null || aListSearchUser != null}">
+		<nav class="navbar navbar-light bg-light">
+			<form class="form-inline" th:action="@{/api/v1/admin/users/searchById}" method="get">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search user by user id" name="userSearch" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search user</button>
+			</form>
+		</nav>
+	</th:block>
+
+</body>
+</html>

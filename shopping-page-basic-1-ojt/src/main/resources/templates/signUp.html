@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Register Account From</title>
+<link rel="stylesheet" th:href="@{/register-page/signUpPage.css}"
+	type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="container">
+		<div class="title">Registration</div>
+		<div class="content">
+			<form th:action="@{/api/v1/customer/signUp}" method="POST" th:object="${user}">
+				<div class="user-details">
+					<div class="input-box">
+						<span class="details">Full Name</span> <span class="errors hide">Error</span>
+						<input type="text" th:field="*{fullName}"
+							placeholder="Enter your name" required>
+					</div>
+					<div class="input-box">
+						<span class="details">Username</span> <span class="errors hide">Error</span>
+						<input type="text" th:field="*{userId}"
+							placeholder="Enter your username" required>
+					</div>
+					<div class="input-box">
+						<span class="details">Email</span> <span class="errors hide">Error</span>
+						<input type="text" th:field="*{email}"
+							placeholder="Enter your email" required>
+					</div>
+
+					<div class="input-box">
+						<span class="details">Address</span> <span class="errors hide">Error</span>
+						<input type="text" th:field="*{address}"
+							placeholder="Enter your password" required>
+					</div>
+
+					<div class="input-box">
+						<span class="details">Phone Number</span> <span
+							class="errors hide">Error</span> <input type="text"
+							th:field="*{phone}" placeholder="Enter your number" required>
+					</div>
+					
+
+					<div class="input-box">
+						<span class="details">Password</span> <span class="errors hide">Error</span>
+						<input type="password" th:field="*{password}"
+							placeholder="Enter your password" required>
+					</div>
+
+					<div class="input-box">
+						<span class="details">Confirm Password</span> <span
+							class="errors hide">Error</span> <input type="password"
+							placeholder="Confirm your password" required>
+					</div>
+
+
+				</div>
+				
+				<div class="button">
+					<input type="submit" value="Register">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
