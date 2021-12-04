@@ -56,6 +56,10 @@ public interface DepartmentService {
 
 	<S extends DepartmentEntity> S save(S entity);
 
+	List<DepartmentEntity> getAllDepartmentWithActivateStatus();
+
+	Optional<DepartmentEntity> findByDepId(String depId);
+
 	Optional<DepartmentEntity> changeStatusOfDepartment(String depId, String status);
 
 }

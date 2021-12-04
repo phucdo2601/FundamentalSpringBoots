@@ -37,7 +37,4 @@ public class EmployeeEntity extends BaseEntity implements Serializable {
 	@Field(name = "email_id")
 	private String emailId;
 	
-	@Field(name = "dep_id")
-	private String depId;
-	
 }

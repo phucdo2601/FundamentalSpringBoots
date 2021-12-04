@@ -1,11 +1,19 @@
 package com.phucdn.learnSpringSecurity.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,48 +23,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phucdn.learnSpringSecurity.entity.DepartmentEntity;
 import com.phucdn.learnSpringSecurity.entity.EmployeeEntity;
-import com.phucdn.learnSpringSecurity.exception.DepartmentException;
 import com.phucdn.learnSpringSecurity.exception.EmployeeException;
-import com.phucdn.learnSpringSecurity.repository.DepartmentRepository;
 import com.phucdn.learnSpringSecurity.repository.EmployeeRepostiory;
-import com.phucdn.learnSpringSecurity.service.DepartmentService;
 import com.phucdn.learnSpringSecurity.service.EmployeeService;
-import com.phucdn.learnSpringSecurity.service.SequenceGeneratorService;
+import com.phucdn.learnSpringSecurity.utils.CommonUtils;
 import com.phucdn.learnSpringSecurity.utils.Constant;
-import com.phucdn.learnSpringSecurity.utils.DateInstance;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeService employeeService;
 
 	@Autowired
 	private EmployeeRepostiory employeeRepostiory;
-
-	@Autowired
-	private DepartmentRepository departmentRepository;
-
-	@Autowired
-	private DepartmentService departmentService;
-
-	@Autowired
-	private SequenceGeneratorService sequenceGeneratorService;
+	
+//	private MapperS
 
 	@GetMapping("/employees")
 	public ResponseEntity<?> getAllEmployee() {
 
+		CommonUtils.autoCreatePassword();
 		return new ResponseEntity<>(employeeService.findAll(), HttpStatus.OK);
+
 	}
 
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<EmployeeEntity> getEmployeeById(@PathVariable("id") String empId) {
-
+		LOGGER.info("Find employee By emp_id: " + empId);
+		LOGGER.trace("This is TRACE");
+		LOGGER.debug("This is DEBUG");
+		LOGGER.info("This is INFO");
+		LOGGER.warn("This is WARN");
+		LOGGER.error("This is ERROR");
 		Optional<EmployeeEntity> empOptional = employeeRepostiory.findByEmpId(empId);
 
 		return empOptional.map(emp -> ResponseEntity.ok().body(emp))
@@ -68,6 +73,7 @@ public class EmployeeController {
 		long mills = System.currentTimeMillis();
 		Date dateOfCreate = new Date(mills);
 		employeeEntity.setDateOfCreate(dateOfCreate);
+		employeeEntity.setStatus(Constant.EMPLOYEE_DEMO.ACTIVATE_STATUS);
 		return new ResponseEntity<EmployeeEntity>(employeeService.save(employeeEntity), HttpStatus.CREATED);
 	}
 
@@ -99,66 +105,52 @@ public class EmployeeController {
 		return ResponseEntity.ok(response);
 	}
 
-	@GetMapping("/departments")
-	public ResponseEntity<?> getAllDepartments() {
-		return new ResponseEntity<>(departmentRepository.getAllDepartmentWithActivateStatus(), HttpStatus.OK);
+	@GetMapping("/employees/findLikeFirstNameOrEmail")
+	public ResponseEntity<?> findLikeFirstNameOrEmailId(@RequestParam("search") String search) {
+
+		List<EmployeeEntity> listSearch = employeeRepostiory.findEmployeeByFirstNameOrEmailId(search);
+
+		return new ResponseEntity<>(listSearch, HttpStatus.OK);
 	}
 
-	@GetMapping("/departments/{id}")
-	public ResponseEntity<?> getDepartmentByDepartmentId(@PathVariable("id") String depId) {
-		Optional<DepartmentEntity> findDepByDepId = departmentRepository.findByDepId(depId);
+	@GetMapping("/employees/findLikeFirstNameOrEmailPaging")
+	public ResponseEntity<?> findLikeFirstNameOrEmailIdWithPaging(
+			@RequestParam(value = "search", required = true) String search,
+			@RequestParam(value = "pSize", required = false, defaultValue = "5") int pageSize,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Optional<Integer> pageNum) {
 
-		return findDepByDepId.map(dep -> ResponseEntity.ok().body(dep))
-				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
+		int pageInput = pageNum.get().intValue();
+		if (pageInput < 0) {
+			return new ResponseEntity<>("This page num is not correct. Please Input Again(Greater than 1)!",
+					HttpStatus.NOT_FOUND);
+		} else {
+			
+			List<EmployeeEntity> listReturn = new ArrayList<>();
+			Pageable paging;
+			if (pageNum.isEmpty()) {
+				paging = PageRequest.ofSize(pageSize);
+			} else {
+				paging = PageRequest.of(pageInput, pageSize);
+			}
 
-	@PostMapping("/departments")
-	public ResponseEntity<?> createNewDep(@RequestBody DepartmentEntity depEntity) {
-		long mills = System.currentTimeMillis();
-		Date dateOfCreate = new Date(mills);
+			Page<EmployeeEntity> pageEmps = employeeRepostiory.findEmployeeeByFirstNameOrEmailIdPaging(search, paging);
 
-		depEntity.setDateOfCreate(dateOfCreate);
-		depEntity.setStatus(Constant.DEPARTMENT_DEMO.ACTIVATE_STATUS);
-		return new ResponseEntity<>(departmentService.save(depEntity), HttpStatus.OK);
-	}
+			listReturn = pageEmps.getContent();
 
-	@PutMapping("/departments/{id}")
-	public ResponseEntity<?> updateDepartmentByDepId(@PathVariable("id") String depId,
-			@RequestBody DepartmentEntity departmentEntity) {
-		Optional<DepartmentEntity> depOptional = departmentRepository.findByDepId(depId);
+			Map<String, Object> response = new HashMap<>();
+			response.put("currentPage", pageEmps.getNumber());
+			response.put("employees", listReturn);			
+			response.put("totalItems", pageEmps.getTotalElements());
+			response.put("totalPages", pageEmps.getTotalPages());
 
-		return depOptional.map(dep -> {
-			dep.setDepName(departmentEntity.getDepName());
-			dep.setUpdateBy(departmentEntity.getUpdateBy());
-			dep.setStatus(Constant.DEPARTMENT_DEMO.ACTIVATE_STATUS);
-			dep.setDateOfUpdate(DateInstance.getCurrentTime());
-			dep.setDescription(departmentEntity.getDescription());
-			final DepartmentEntity updateDepartment = departmentService.save(dep);
-			return new ResponseEntity<>(updateDepartment, HttpStatus.OK);
-		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-
-	}
-
-	@DeleteMapping("/departments/{id}")
-	public ResponseEntity<?> deleteDepartmentByDepId(@PathVariable("id") String depId) {
-		DepartmentEntity departmentEntity = departmentRepository.findByDepId(depId)
-				.orElseThrow(() -> new DepartmentException("Department does not exsit with this id:" + depId));
-
-		departmentService.delete(departmentEntity);
-		Map<String, Boolean> response = new HashMap<>();
-
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 	
-	@PutMapping("/departments/banDep/{id}")
-	public ResponseEntity<?> banDepartmentByDeptId(@PathVariable("id") String depId) {
-		DepartmentEntity departmentEntity = departmentRepository.findByDepId(depId)
-				.orElseThrow(() -> new DepartmentException("Department does not exsit with this id:" + depId));
-		
-		Optional<DepartmentEntity> banDep = departmentService.changeStatusOfDepartment(depId, Constant.DEPARTMENT_DEMO.IN_ACTICATE_STATUS);
-		
-		return new ResponseEntity<>(banDep, HttpStatus.OK);
-		
+	@GetMapping(path = "/employees/tLoadListEmp1")
+	public ResponseEntity<?> testLoadListEmp1() {
+		List<EmployeeEntity> listReturn = employeeService.findAll().stream()
+				.collect(Collectors.toList());
+		return new ResponseEntity<>(listReturn, HttpStatus.OK);
 	}
 }

@@ -15,7 +15,7 @@ import com.phucdn.learnSpringSecurity.repository.EmployeeRepostiory;
 import com.phucdn.learnSpringSecurity.service.EmployeeService;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeRepostiory employeeRepostiory;
@@ -129,5 +129,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public void deleteAll() {
 		employeeRepostiory.deleteAll();
 	}
+	
 	
 }

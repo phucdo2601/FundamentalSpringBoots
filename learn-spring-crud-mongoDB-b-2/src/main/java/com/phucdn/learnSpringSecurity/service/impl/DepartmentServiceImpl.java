@@ -23,10 +23,20 @@ import com.phucdn.learnSpringSecurity.service.DepartmentService;
 public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
-	private DepartmentRepository departmentRepository;
+	private MongoTemplate mongoTemplate;
 	
 	@Autowired
-	private MongoTemplate mongoTemplate;
+	private DepartmentRepository departmentRepository;
+
+	@Override
+	public Optional<DepartmentEntity> findByDepId(String depId) {
+		return departmentRepository.findByDepId(depId);
+	}
+
+	@Override
+	public List<DepartmentEntity> getAllDepartmentWithActivateStatus() {
+		return departmentRepository.getAllDepartmentWithActivateStatus();
+	}
 
 	@Override
 	public <S extends DepartmentEntity> S save(S entity) {
@@ -137,8 +147,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public void deleteAll() {
 		departmentRepository.deleteAll();
 	}
-	
-	
+
+
 	@Override
 	public Optional<DepartmentEntity> changeStatusOfDepartment(String depId, String status) {
 		Query query = new Query(Criteria.where("depId").is(depId));

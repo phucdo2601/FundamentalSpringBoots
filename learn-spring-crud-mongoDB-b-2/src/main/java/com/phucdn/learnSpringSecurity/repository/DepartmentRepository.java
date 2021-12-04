@@ -17,4 +17,6 @@ public interface DepartmentRepository extends MongoRepository<DepartmentEntity, 
 	
 	@Query("{'status' : 'Activate'}")
 	public List<DepartmentEntity> getAllDepartmentWithActivateStatus();
+	
+	public List<DepartmentEntity> findByDepIdIn(List<String> ids);
 }
