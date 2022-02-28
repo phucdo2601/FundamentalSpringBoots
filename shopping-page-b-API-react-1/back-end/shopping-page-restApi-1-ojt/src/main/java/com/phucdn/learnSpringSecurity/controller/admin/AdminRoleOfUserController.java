@@ -24,7 +24,10 @@ import com.phucdn.learnSpringSecurity.entity.RoleOfUserEntity;
 import com.phucdn.learnSpringSecurity.exception.RoleOfUserException;
 import com.phucdn.learnSpringSecurity.service.RoleOfUserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Admin Role of user")
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/v1/admin/roleOfUser")
 public class AdminRoleOfUserController {
