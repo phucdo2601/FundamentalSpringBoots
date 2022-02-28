@@ -604,6 +604,17 @@ GET http://localhost:8080/api/v1/todo/11
     - Đối với máy chạy win: Tải về và giải nén, sau đó vô thu mục giải nén theo đường dẫn ../keycloak/bin và bật cmd lên rồi nhập câu lệnh: standalone.bat -Djboss.http.port=8180
         để start server kecloak, sau đó bạn vô trình duyệt web nhập: localhost:8180/auth, rồi tạo tài khoản admin rồi bắt đầu khám phá
  
+ # Thêm swagger vào project REST-API Spring
+    -Thêm dependency sau đây:
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+
+    -Sau Khi thêm xong restart project, rồi nhập câu đường dẫn này trên browser: http://localhost:8080/swagger-ui.html (Số cổng của port sẽ tùy thuộc vào bạn cài cổng port cho project (Mặc định: localhost:8080))
+
 # Kết
 Đây là một bài viết trong Series làm chủ Spring Boot, từ zero to hero
 
