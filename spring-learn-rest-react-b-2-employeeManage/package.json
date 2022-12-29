@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "bootstrap": "^5.1.1",
-    "react-axios": "^2.0.5"
-  }
-}
