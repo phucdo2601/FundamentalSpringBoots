@@ -1,6 +1,5 @@
 package com.phucdn.employeeapp.dto.response;
 
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeResponse {
+public class AddressResponse {
 	private Integer id;
-	private String name;
-	private String email;
-	private String bloodGroup;
-	private List<AddressResponse> addressResponse;
+	private String lane1;
+	private String lane2;
+	private String state;
+	private String zip;
 }

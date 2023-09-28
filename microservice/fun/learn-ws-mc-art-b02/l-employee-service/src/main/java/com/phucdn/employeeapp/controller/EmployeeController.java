@@ -19,7 +19,7 @@ public class EmployeeController {
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<?> getEmployeeDetailsById(@PathVariable(name = "id") Integer id) {
 		var empDetail = employeeService.getEmployeeById(id);
-
+		System.out.println(empDetail);
 		if (empDetail != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(empDetail);
 		} else {
