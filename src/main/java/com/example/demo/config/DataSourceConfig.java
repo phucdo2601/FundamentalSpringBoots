@@ -10,6 +10,6 @@ public class DataSourceConfig {
 
 	public DataSource getDatasource() {
 		return DataSourceBuilder.create().driverClassName("com.mysql.cj.jdbc.Driver")
-				.url("jdbc:mysql://localhost:3306/learn_spring_api_jwt_swag_b01").username("root").password("12345678").build();
+				.url("jdbc:mysql://localhost:3124/learn_spring_api_jwt_swag_b01").username("root").password("12345678").build();
 	}
 }
