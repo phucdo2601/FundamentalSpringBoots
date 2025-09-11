@@ -1,0 +1,64 @@
+Web bán bánh kẹo:
+
+Các công nghệ sử dụng:
+	Backend: Java Spring Boost REST FULL API(4 layers: model-repository-service-controller) + Java Core
+	
+	Frontend: Reactjs + Typescript
+
+	Database: MSSQL
+
+	Development Build:
+		Database: docker
+
+
+Các thực thể cần xác định khi thực hiện phát triển:
+
+	- Mực độ logical:
+		- Web bán hàng hóa (ban đàu tập trung vô các ngành hàng bánh kẹo): product
+		- Một Hàng hóa sẽ thuộc về một thương hiệu: productBrand
+		- Một Hàng hóa sẽ thuộc về một nhóm hoặc nhiều nhóm hàng hóa:
+			- Cần có nhóm hàng hóa tổng thể: productGeneralCategory
+			- Cần có nhóm nghành hàng ứng với sản phẩm ( 1 sp - n cate hoặc n sp - 1 cate): productProdcutCate
+		- Một hàng hóa sẽ có các khuyến mãi khác nhau:
+			- Cần có một nhóm các khuyến mãi chung: productGeneralCoupon
+			- Cần có một nhóm các khuyến mãi ứng với sản phẩm ( 1 sp - n coupon hoặc 1 coupon - n sp): productProdcutCoupon
+		- Một coupon thì sẽ thuộc một loại khuyến mãi:
+			- Cần có một loại coupon: couponGeneralType
+		- Một website cần có khánh hàng mua: customer
+		- Một website cần có những nhân viên tư vấn bán hàng, quản trị hệ thống => vậy thì chúng ta cần có thực thể nhân viên: staff => ứng với mỗi staff sẽ có một hoặc nhiều vài trò khác nhau: staffRole
+
+		- Một khách hàng sau khi chọn sản phẩm thì cần phải thêm và giở hàng: Cart
+		- Trong một giỏ hàng thì sẽ một hoặc nhiều mặt hàng: CartItem
+		- Sau khi khách hàng toán cần thì sẽ hình thanh đơn hàng hàng ở trạng thái chờ xác nhận
+			Cần có các bảng sau để phục vụ quá trình này:
+				- Đơn hàng: Order
+				- Chi tiết đơn hàng: OrderItems
+				- Trạng thái đơn hàng
+		- Sau khi khách hàng thực hiện mua sẵm trên hệ thống, thì họ cần phải tích lũy lưu trữ điểm thưởng qua các lần mua hàng:
+			Cần có một bảng chung vè xếp hạng thành viên bên trong hệ thống: generalCustomerRank
+
+		- Mỗi khách hàng khi mua hàng trên hệ thống đều sẽ có điểm tích lũy dựa trên tổng thể số tiền mà họ đã bỏ ra, và lấy số điểm đó có thể đổi được các mã giảm giá để có thể sử dụng cho các đơn hàng tiếp theo
+
+		- Bên cạnh đó mỗi đơn hàng của khách hang khi mua sắm qua hệ thống đều sẽ thanh toán bằng nhiều hình thức khác nhau:
+			Cần lưu trữ các phương thức thanh toán đó có một bảng PaymentMethod
+
+
+Các thực thể xác định ở mực độ physical (Đưa ra các thực thể khái quát cần thiết trong hệ thống):
+	- Product
+	- ProductBrand
+	- ProductGeneralCategory
+	- ProductProductCate
+	- ProductGeneralCoupon
+	- GeneralCoupon
+	- CouponGeneralType
+	- Customer
+	- Staff
+	- GeneralRole
+	- StaffRole
+	- Cart
+	- CartItem
+	- Order
+	- OrderItems
+	- GeneralStatus
+	- GeneralCustomerRank
+	- PaymentMethod

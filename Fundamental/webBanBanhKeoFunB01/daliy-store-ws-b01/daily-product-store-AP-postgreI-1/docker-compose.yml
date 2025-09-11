@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  daily-product-store-postgres-db:
+    container_name: daily-product-store-postgres-db
+    image: postgres:16.3-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres.rzarqlnrgmmxjguckzsa
+      - POSTGRES_PASSWORD=123456@Abc#!mn
+      - POSTGRES_DB=postgres
+    volumes:
+      - daily-product-store-postgres-db:/var/lib/postgresql/data
+
+volumes:
+  daily-product-store-postgres-db:

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  l-bas-send-mail-mvs-b01-db:
+    container_name: l-bas-send-mail-mvs-b01-db
+    image: postgres:16.3-alpine
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=l-bas-send-mail-mvs-b01
+    volumes:
+      - l-bas-send-mail-mvs-b01-db-v:/var/lib/postgresql/data
+
+volumes:
+  l-bas-send-mail-mvs-b01-db-v:

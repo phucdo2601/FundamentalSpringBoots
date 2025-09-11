@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  daily-product-store-db-mssql:
+    container_name: daily-product-store-db-mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1456:1433"
+    environment:
+      SA_PASSWORD: "12345678A@"
+      ACCEPT_EULA: "Y"
