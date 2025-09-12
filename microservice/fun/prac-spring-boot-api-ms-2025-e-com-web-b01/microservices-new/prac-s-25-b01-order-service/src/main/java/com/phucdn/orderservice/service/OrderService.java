@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import com.phucdn.orderservice.dto.InventoryResponse;
 import com.phucdn.orderservice.dto.OrderLineItemDto;
 import com.phucdn.orderservice.dto.OrderRequest;
 import com.phucdn.orderservice.model.Order;
@@ -19,6 +21,9 @@ public class OrderService implements IOrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private WebClient webClient;
 
 	@Override
 	public void placeOrder(OrderRequest orderRequest) {
@@ -31,6 +36,18 @@ public class OrderService implements IOrderService {
 		
 		order.setOrderLineItemList(orderLineItem);
 		
+		// get list skuCode
+		List<String> skuCodes = order.getOrderLineItemList().stream()
+				.map(OrderLineItem::getSkuCode).toList();
+		
+		// Call inventory service, and place order if product is in stock
+
+		InventoryResponse[] inventoryResponsArray = webClient.get()
+				.uri("http://localhost:8084/api/inventory", uriBuilder -> uriBuilder.queryParam("sku-code", skuCodes).build())
+				.retrieve()
+				.bodyToMono(InventoryResponse[].class)
+				.block()
+;				
 		orderRepository.save(order);
 	}
 	
