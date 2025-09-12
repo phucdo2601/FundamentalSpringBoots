@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phucdn.orderservice.dto.OrderLineItemDto;
 import com.phucdn.orderservice.dto.OrderRequest;
@@ -13,6 +14,7 @@ import com.phucdn.orderservice.model.OrderLineItem;
 import com.phucdn.orderservice.repository.OrderRepository;
 
 @Service
+@Transactional
 public class OrderService implements IOrderService {
 	
 	@Autowired
