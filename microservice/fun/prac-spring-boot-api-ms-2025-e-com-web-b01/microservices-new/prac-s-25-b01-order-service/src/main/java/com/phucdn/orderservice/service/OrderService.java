@@ -1,5 +1,6 @@
 package com.phucdn.orderservice.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,17 +39,24 @@ public class OrderService implements IOrderService {
 		
 		// get list skuCode
 		List<String> skuCodes = order.getOrderLineItemList().stream()
-				.map(OrderLineItem::getSkuCode).toList();
+                .map(OrderLineItem::getSkuCode)
+                .toList();
 		
 		// Call inventory service, and place order if product is in stock
 
 		InventoryResponse[] inventoryResponsArray = webClient.get()
-				.uri("http://localhost:8084/api/inventory", uriBuilder -> uriBuilder.queryParam("sku-code", skuCodes).build())
+				.uri("http://localhost:8084/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
 				.retrieve()
 				.bodyToMono(InventoryResponse[].class)
-				.block()
-;				
-		orderRepository.save(order);
+				.block();	
+		
+		boolean allProductsInStock = Arrays.stream(inventoryResponsArray).allMatch(InventoryResponse::isInStock);
+		
+		if (allProductsInStock) {
+			orderRepository.save(order);
+		} else {
+			throw new IllegalArgumentException("Product is not in stock, please try again later.");
+		}
 	}
 	
 	private OrderLineItem mapToDto(OrderLineItemDto orderLineItemDto) {
