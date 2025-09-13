@@ -3,12 +3,14 @@ package com.phucdn.inventoryservice;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 import com.phucdn.inventoryservice.model.Inventory;
 import com.phucdn.inventoryservice.repository.InventoryRepository;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class PracSpringMcEcom2025B01InventoryServiceApplication {
 
 	public static void main(String[] args) {

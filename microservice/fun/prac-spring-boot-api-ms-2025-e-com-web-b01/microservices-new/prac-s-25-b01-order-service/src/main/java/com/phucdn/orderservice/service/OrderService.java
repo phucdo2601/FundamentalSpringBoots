@@ -24,7 +24,7 @@ public class OrderService implements IOrderService {
 	private OrderRepository orderRepository;
 	
 	@Autowired
-	private WebClient webClient;
+	private WebClient.Builder webClientBuilder;
 
 	@Override
 	public void placeOrder(OrderRequest orderRequest) {
@@ -44,8 +44,10 @@ public class OrderService implements IOrderService {
 		
 		// Call inventory service, and place order if product is in stock
 
-		InventoryResponse[] inventoryResponsArray = webClient.get()
-				.uri("http://localhost:8084/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+		InventoryResponse[] inventoryResponsArray = webClientBuilder
+				.build()
+				.get()
+				.uri("http://prac-spring-mc-ecom-2025-b01-inventory-service/api/inventory", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
 				.retrieve()
 				.bodyToMono(InventoryResponse[].class)
 				.block();	
