@@ -15,6 +15,7 @@
     	<module>prac-s-25-b01-order-service</module>
     	<module>prac-s-25-b01-inventory-service</module>
     	<module>discovery-server</module>
+    	<module>api-gateway</module>
     </modules>
     
     <properties>
