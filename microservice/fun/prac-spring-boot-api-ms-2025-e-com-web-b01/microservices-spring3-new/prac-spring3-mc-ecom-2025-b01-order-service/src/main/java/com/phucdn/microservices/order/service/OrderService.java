@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.phucdn.microservices.order.client.InventoryClient;
 import com.phucdn.microservices.order.dto.OrderRequest;
 import com.phucdn.microservices.order.model.Order;
 import com.phucdn.microservices.order.repository.OrderRepository;
@@ -15,10 +16,19 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	@Autowired
+	private InventoryClient inventoryClient;
+
 	@Override
 	public void placeOrder(OrderRequest orderRequest) {
-		var order = mapToOrder(orderRequest);
-		orderRepository.save(order);
+		boolean inStock = inventoryClient.isInStock(orderRequest.getSkuCode(), orderRequest.getQuantity());
+		
+		if (inStock) {
+			var order = mapToOrder(orderRequest);
+			orderRepository.save(order);
+		} else {
+			throw new RuntimeException("Product with Skucode " + orderRequest.getSkuCode() + "is not in stock");
+		}
 	}
 	
 	private static Order mapToOrder(OrderRequest orderRequest) {
