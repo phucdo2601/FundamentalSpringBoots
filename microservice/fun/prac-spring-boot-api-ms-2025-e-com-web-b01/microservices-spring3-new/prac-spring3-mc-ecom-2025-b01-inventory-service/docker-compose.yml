@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  prac-spring3-mc-ecom-2025-b01-inventory-service-db:
+    image: mysql
+    container_name: prac-spring3-mc-ecom-2025-b01-inventory-service-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678               # Set MySQL root password
+      MYSQL_DATABASE: prac-spring3-mc-ecom-2025-b01-inventory-service          # Set a default database
+      MYSQL_USER: phucdn                          # Set a user for the database
+      MYSQL_PASSWORD: 12345678                    # Password for the user
+    ports:
+      - "3314:3306"                               # Expose MySQL port to the host
+    volumes:
+      - db_data:/vat/lb/mysql                     # Persist MySQL data in a volume
+    networks:
+      - mynetwork
+
+volumes:
+  db_data:                                        # Define a volume to persist data
+
+networks:
+  mynetwork:                                      # Define a network for communication between services
