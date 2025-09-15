@@ -1,0 +1,3 @@
+com\phucdn\microservices\gateway\config\SecurityConfig.class
+com\phucdn\microservices\gateway\routes\Routes.class
+com\phucdn\microservices\gateway\ApiGatewayApplication.class
