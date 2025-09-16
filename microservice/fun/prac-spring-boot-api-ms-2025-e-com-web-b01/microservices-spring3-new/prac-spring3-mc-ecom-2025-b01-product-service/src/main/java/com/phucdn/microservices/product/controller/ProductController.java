@@ -21,16 +21,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductController {
 	private final IProductService productService;
-	
+
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void createProduct(@RequestBody ProductRequest productRequest) {
 		productService.createProduct(productRequest);
 	}
-	
+
 	@GetMapping
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<ProductResponse> getAllProducts() {
+		try {
+			Thread.sleep(5000);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		return productService.getAllProducts();
 	}
 }
