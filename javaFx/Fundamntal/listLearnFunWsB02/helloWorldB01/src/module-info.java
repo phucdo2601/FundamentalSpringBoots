@@ -1,5 +1,6 @@
-module helloWorld {
+module helloWorldB01 {
 	requires javafx.controls;
+	requires javafx.fxml;
 	
 	opens application to javafx.graphics, javafx.fxml;
 }
