@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="application.MainController">
+   <children>
+      <Slider fx:id="slider" layoutX="74.0" layoutY="143.0" />
+      <TextField fx:id="txtField" layoutX="70.0" layoutY="179.0" />
+   </children>
+</AnchorPane>
