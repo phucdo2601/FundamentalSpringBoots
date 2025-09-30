@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
@@ -33,7 +34,37 @@ public class MainController implements Initializable {
 		DoubleProperty height = mediaView.fitHeightProperty();
 		width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
 		height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
-		
+	}
+	
+	public void play(ActionEvent event) {
+		mp.play();
+	}
+	
+	public void pause(ActionEvent event) {
+		mp.pause();
+	}
+	
+	public void fast(ActionEvent event) {
+		mp.setRate(2);
+	}
+	
+	public void slow(ActionEvent event) {
+		mp.setRate(0.5);
+	}
+	
+	public void reload(ActionEvent event) {
+		mp.seek(mp.getStartTime());
+		mp.play();
+	}
+	
+	public void start(ActionEvent event) {
+		mp.seek(mp.getStartTime());
+		mp.stop();
+	}
+	
+	public void last(ActionEvent event) {
+		mp.seek(mp.getTotalDuration());
+		mp.stop();
 	}
 
 }
