@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.phucdn.mapper.ProductMapper;
+import com.phucdn.model.Category;
 import com.phucdn.model.Product;
 import com.phucdn.model.Store;
 import com.phucdn.model.User;
 import com.phucdn.payload.dto.ProductDto;
+import com.phucdn.repository.CategoryRepository;
 import com.phucdn.repository.ProductRepository;
 import com.phucdn.repository.StoreRepository;
 import com.phucdn.service.ProductService;
@@ -24,12 +26,17 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private StoreRepository storeRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public ProductDto createProduct(ProductDto productDto, User user) throws Exception {
 		Store store = storeRepository.findById(productDto.getStoreId()).orElseThrow(() -> new Exception("Store not found."));
 		
-		Product product = ProductMapper.toEntity(productDto, store);
+		Category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new Exception("Category not found!"));
+		
+		Product product = ProductMapper.toEntity(productDto, store, category);
 		
 		Product savedProduct = productRepository.save(product);
 		
@@ -39,6 +46,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDto updateProduct(Long id, ProductDto productDto, User user) throws Exception {
 		Product product = productRepository.findById(id).orElseThrow(() -> new Exception("Product not found!"));
+		
+		if (productDto.getCategoryId() != null) {
+			Category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new Exception("Category not found!"));
+			if (category != null) {
+				product.setCategory(category);
+			}
+		}
 		
 		product.setName(productDto.getName());
 		product.setDescription(productDto.getDescription());
