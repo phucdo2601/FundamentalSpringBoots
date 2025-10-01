@@ -1,6 +1,6 @@
 package com.phucdn.exceptions;
 
-public class UserException extends Throwable {
+public class UserException extends Exception {
 
 	/**
 	 * 
