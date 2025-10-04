@@ -76,6 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			User user = UserMapper.toEntity(employee);
 			user.setBranch(branch);
 			user.setPassword(passwordEncoder.encode(employee.getPassword()));
+			user.setCreatedDate(LocalDateTime.now());
+			user.setUpdatedDate(LocalDateTime.now());
 
 			return UserMapper.toDto(userRepository.save(user));
 		}
