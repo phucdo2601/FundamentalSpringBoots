@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDto> getOrdersByBranch(Long branchId, Long customerId, Long cashierId, PaymentType paymentType,
 			OrderStatus orderStatus) throws Exception {
 		// TODO Auto-generated method stub
-		return orderRepository.findByBrandId(branchId).stream()
+		return orderRepository.findByBranchId(branchId).stream()
 				.filter(order -> customerId == null
 						|| (order.getCustomer() != null && order.getCustomer().getId().equals(customerId)))
 				.filter(order -> cashierId == null
