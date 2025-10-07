@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.phucdn.domain.PaymentType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,7 +46,7 @@ public class Order {
 	@ManyToOne
 	private Customer customer;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> items;
 	
 	private PaymentType paymentType;
