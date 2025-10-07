@@ -53,10 +53,10 @@ public class ShiftReportServiceImpl implements ShiftReportService {
 	private UserService userService;
 
 	@Override
-	public ShiftReportDto startShift(Long cashierId, Long branchId, LocalDateTime shiftStart, LocalDateTime shiftEnd)
+	public ShiftReportDto startShift()
 			throws Exception {
 		User currentUser = userService.getCurrentUser();
-		shiftStart = LocalDateTime.now();
+		LocalDateTime shiftStart = LocalDateTime.now();
 
 		LocalDateTime startOfDay = shiftStart.withHour(0).withMinute(0).withSecond(0);
 		LocalDateTime endOfDay = shiftStart.withHour(23).withMinute(59).withSecond(59);
@@ -152,7 +152,7 @@ public class ShiftReportServiceImpl implements ShiftReportService {
 		
 		LocalDateTime now = LocalDateTime.now();
 		List<Order> orders = orderRepository.findByCashierAndCreatedAtBetween(currentUser, shiftReport.getShiftStart(), now);
-		List<Refund> refunds = refundRepository.findByCashierIdAndCreatedAtBetween(currentUser.getId(), shiftReport.getShiftStart(), shiftReport.getShiftEnd());
+		List<Refund> refunds = refundRepository.findByCashierIdAndCreatedAtBetween(currentUser.getId(), shiftReport.getShiftStart(), now);
 		
 		double totalRefunds = refunds.stream().mapToDouble(refund -> refund.getAmount() != null ? refund.getAmount() : 0.0).sum();
 		double totalSales = orders.stream().mapToDouble(Order::getTotalAmount).sum();
@@ -181,7 +181,7 @@ public class ShiftReportServiceImpl implements ShiftReportService {
 		LocalDateTime start = date.withHour(0).withMinute(0).withSecond(0);
 		LocalDateTime end = date.withHour(23).withMinute(59).withSecond(59);
 		
-		ShiftReport report = shiftReportRepository.findByCashierAndShiftStartBetween(cashier, start, end).orElseThrow(() -> new Exception("Shift report not found for cashier"+ cashierId));
+		ShiftReport report = shiftReportRepository.findByCashierAndShiftStartBetween(cashier, start, end).orElseThrow(() -> new Exception("Shift report not found for date"));
 		
 		return ShiftReportMapper.toDto(report);
 	}

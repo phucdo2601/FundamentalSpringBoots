@@ -6,7 +6,7 @@ import java.util.List;
 import com.phucdn.payload.dto.ShiftReportDto;
 
 public interface ShiftReportService {
-	ShiftReportDto startShift(Long cashierId, Long branchId, LocalDateTime shiftStart, LocalDateTime shiftEnd) throws Exception;
+	ShiftReportDto startShift() throws Exception;
 	
 	ShiftReportDto endShift(Long shiftReportId, LocalDateTime shiftEnd) throws Exception;
 	
