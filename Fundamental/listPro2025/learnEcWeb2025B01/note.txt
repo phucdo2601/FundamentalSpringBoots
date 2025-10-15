@@ -1,0 +1,2 @@
+mat khau db: Gcd8lT5Txe3oRvhA
+chuoi ket not db: jdbc:postgresql://db.xjokaomnyxvnriplohsk.supabase.co:5432/postgres?user=postgres&password=Gcd8lT5Txe3oRvhA
