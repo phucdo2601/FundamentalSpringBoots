@@ -1,11 +1,19 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  daily-product-store-db-mssql:
-    container_name: daily-product-store-db-mssql
+  java-spring-daliy-store-ws-b01-sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: java-spring-daliy-store-ws-b01-sqlserver
     ports:
-      - "1456:1433"
+      - "1456:1433" # Expose SQL Server on port 1433
     environment:
-      SA_PASSWORD: "12345678A@"
-      ACCEPT_EULA: "Y"
+      ACCEPT_EULA: "Y"                 # Accept the license agreement
+      MSSQL_SA_PASSWORD: "12345678A@" # Ensure the password meets complexity requirements
+    security_opt:
+      - seccomp:unconfined            # Disable security restrictions for debugging purposes
+    volumes:
+      - sql_data:/var/opt/mssql       # Persistent data storage
+    restart: unless-stopped           # Automatically restart the container unless stopped manually
+
+volumes:
+  sql_data:
