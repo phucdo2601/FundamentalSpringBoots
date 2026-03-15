@@ -1,6 +1,6 @@
 import { Carousel } from "@mantine/carousel";
 import React from "react";
-import { jobCategories } from "../Pages/Data/Data";
+import { jobCategories } from "../Data/Data";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 
 const JobCategories = () => {
