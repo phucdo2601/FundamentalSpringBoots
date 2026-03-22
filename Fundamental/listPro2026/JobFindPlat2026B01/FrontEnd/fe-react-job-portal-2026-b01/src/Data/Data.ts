@@ -65,4 +65,52 @@ const jobCategories = [
   },
 ];
 
-export { companies, jobCategories };
+const work = [
+  {
+    name: "Build your resume",
+    desc: "Create a standout resume with your profile",
+    imgName: "BuildYourResume",
+  },
+  {
+    name: "Apply for job",
+    desc: "Find and apply for jobs that match your skills.",
+    imgName: "ApplyForJob",
+  },
+  {
+    name: "Get Hired",
+    desc: "Connect with employers and start your new job.",
+    imgName: "GetHired",
+  },
+];
+
+const testimonials = [
+  {
+    name: "user-employee-01",
+    testimonial:
+      "This job portal made job searhc easy and quick. Recommended to all job seekers!",
+    rating: 5,
+  },
+  {
+    name: "user-employee-02",
+    testimonial:
+      "Found my dream job within a week! The application process was smooth.",
+    rating: 5,
+  },
+  {
+    name: "user-employee-03",
+    testimonial: "This platform is very convenient!",
+    rating: 5,
+  },
+  { name: "user-employee-04", testimonial: "This is so fantastic!", rating: 5 },
+];
+
+const footerLinks = [
+  { title: "Product", links: ["Find Job", "Find Company", "Find Employee"] },
+  {
+    title: "Company",
+    links: ["About Us", "Contact Us", "Privacy Policy", "Terms & Conditions"],
+  },
+  { title: "Support", links: ["Help & Support", "Feedback", "FAQs"] },
+];
+
+export { companies, jobCategories, work, testimonials, footerLinks };

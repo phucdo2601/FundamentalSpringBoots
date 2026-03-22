@@ -3,6 +3,10 @@ import Header from "../Header/Header";
 import DreamJob from "../LandingPage/DreamJob";
 import Companies from "../LandingPage/Companies";
 import JobCategories from "../LandingPage/JobCategories";
+import Working from "../LandingPage/Working";
+import Testimonials from "../LandingPage/Testimonials";
+import Subscribe from "../LandingPage/Subscribe";
+import Footer from "../Footer/Footer";
 
 const HomePage = () => {
   return (
@@ -12,6 +16,10 @@ const HomePage = () => {
         <DreamJob />
         <Companies />
         <JobCategories />
+        <Working />
+        <Testimonials />
+        <Subscribe />
+        <Footer />
       </div>
     </>
   );
