@@ -12,14 +12,12 @@ const HomePage = () => {
   return (
     <>
       <div className="min-h-[100vh] bg-mine-shaft-600 font-['poppins']">
-        <Header />
         <DreamJob />
         <Companies />
         <JobCategories />
         <Working />
         <Testimonials />
         <Subscribe />
-        <Footer />
       </div>
     </>
   );
