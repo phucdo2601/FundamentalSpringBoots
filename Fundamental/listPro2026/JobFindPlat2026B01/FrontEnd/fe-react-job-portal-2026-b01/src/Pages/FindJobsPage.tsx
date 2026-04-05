@@ -3,7 +3,7 @@ import SearchBar from "../FindJobs/SearchBar";
 import { Divider } from "@mantine/core";
 import Jobs from "../FindJobs/Jobs";
 
-const FindJobs = () => {
+const FindJobsPage = () => {
   return (
     <>
       <div className="min-h-[100vh] bg-mine-shaft-600 font-['poppins']">
@@ -17,4 +17,4 @@ const FindJobs = () => {
   );
 };
 
-export default FindJobs;
+export default FindJobsPage;
