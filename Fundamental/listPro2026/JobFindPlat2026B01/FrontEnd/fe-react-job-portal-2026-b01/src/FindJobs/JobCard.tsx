@@ -31,13 +31,27 @@ const JobCard = ({ job }: JobCardProps) => {
           <IconBookmark className="text-mine-shaft-300 cursor-pointer" />
         </div>
         <div
-          className="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
-          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs
+          className="flex gap-2 
         "
         >
-          <div>{job.experience}</div>
-          <div>{job.jobType}</div>
-          <div>{job.location}</div>
+          <div
+            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
+          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
+          >
+            {job.experience}
+          </div>
+          <div
+            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
+          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
+          >
+            {job.jobType}
+          </div>
+          <div
+            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
+          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
+          >
+            {job.location}
+          </div>
         </div>
         <div>
           <Text
@@ -46,19 +60,17 @@ const JobCard = ({ job }: JobCardProps) => {
           >
             {job.description}
           </Text>
-
-          <Divider size={`xs`} color="mineShaft.7" className="m-2" />
-          <div className="flex justify-between">
-            <div className="font-semibold text-mine-shaft-200">
-              &#36; {job.package}
-            </div>
-            <div className="flex gap-1 text-xs items-center text-mine-shaft-400">
-              <IconClockHour3 className="h-5 w-5" stroke={1.5} />{" "}
-              {job.postedDayAgo} days ago
-            </div>
+        </div>
+        <Divider size={`xs`} color="mineShaft.7" />
+        <div className="flex justify-between">
+          <div className="font-semibold text-mine-shaft-200">
+            &#36; {job.package}
+          </div>
+          <div className="flex gap-1 text-xs items-center text-mine-shaft-400">
+            <IconClockHour3 className="h-5 w-5" stroke={1.5} />{" "}
+            {job.postedDayAgo} days ago
           </div>
         </div>
-        <div></div>
       </div>
     </>
   );

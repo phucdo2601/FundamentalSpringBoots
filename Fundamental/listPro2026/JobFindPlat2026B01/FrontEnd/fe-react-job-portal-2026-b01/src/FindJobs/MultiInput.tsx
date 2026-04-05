@@ -112,7 +112,7 @@ export function MultiInput(props: any) {
         </PillsInput>
       </Combobox.DropdownTarget>
 
-      <Combobox.Dropdown>
+      <Combobox.Dropdown style={{ maxHeight: "300px", overflowY: "auto" }}>
         <Combobox.Search
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
