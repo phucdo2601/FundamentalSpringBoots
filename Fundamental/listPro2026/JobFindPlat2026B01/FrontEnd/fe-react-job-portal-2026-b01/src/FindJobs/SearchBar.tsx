@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MultiInput } from "./MultiInput";
-import { dropDownData } from "../Data/Data";
 import { Divider, RangeSlider } from "@mantine/core";
+import { dropDownData } from "../Data/JobData";
 
 const SearchBar = () => {
   const [value, setValue] = useState<[number, number]>([1, 1000]);

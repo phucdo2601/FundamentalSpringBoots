@@ -1,10 +1,3 @@
-import {
-  IconBriefcase,
-  IconMapPin,
-  IconRecharging,
-  IconSearch,
-} from "@tabler/icons-react";
-
 const companies = [
   "Amazon",
   "Figma",
@@ -120,53 +113,4 @@ const footerLinks = [
   { title: "Support", links: ["Help & Support", "Feedback", "FAQs"] },
 ];
 
-const dropDownData = [
-  {
-    title: "Job Title",
-    icon: IconSearch,
-    options: [
-      "Designer",
-      "Developer",
-      "Product Manager",
-      "Marketing Speacialist",
-      "Data Analyst",
-      "Sales Execlutive",
-      "Content writer",
-      "Customer Support",
-    ],
-  },
-  {
-    title: "Location",
-    icon: IconMapPin,
-    options: [
-      "Delhi",
-      "New York",
-      "San Francisco",
-      "London",
-      "Berlin",
-      "Tokyo",
-      "Sydney",
-      "Toronto",
-      "Viet Nam",
-    ],
-  },
-  {
-    title: "Experience",
-    icon: IconBriefcase,
-    options: ["Entry Level", "Intermediate", "Expert"],
-  },
-  {
-    title: "Job Type",
-    icon: IconRecharging,
-    options: ["Full Time", "Part Time", "Contract", "Freelance", "Intership"],
-  },
-];
-
-export {
-  companies,
-  jobCategories,
-  work,
-  testimonials,
-  footerLinks,
-  dropDownData,
-};
+export { companies, jobCategories, work, testimonials, footerLinks };
