@@ -70,7 +70,7 @@ const TalentCard = ({ talent }: TalentCardProps) => {
         </div>
         <Divider size={`xs`} color="mineShaft.7" />
         <div className="flex [&>*]:w-1/2 [&>*]:p-1">
-          <Link to={`talent-profile`}>
+          <Link to={`/talent-profile`}>
             <Button color="brightSun.4" variant="light" fullWidth>
               Profile
             </Button>

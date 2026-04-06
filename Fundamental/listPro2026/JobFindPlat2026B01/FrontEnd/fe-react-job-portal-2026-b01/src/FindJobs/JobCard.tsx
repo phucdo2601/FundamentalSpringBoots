@@ -31,27 +31,13 @@ const JobCard = ({ job }: JobCardProps) => {
           <IconBookmark className="text-mine-shaft-300 cursor-pointer" />
         </div>
         <div
-          className="flex gap-2 
+          className="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
+          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs
         "
         >
-          <div
-            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
-          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
-          >
-            {job.experience}
-          </div>
-          <div
-            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
-          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
-          >
-            {job.jobType}
-          </div>
-          <div
-            className="[&>div]:py-1 [&>div]:px-2 [&>div]:bg-mine-shaft-700
-          [&>div]:text-bright-sun-400 [&>div]:rounded-lg text-xs"
-          >
-            {job.location}
-          </div>
+          <div className="">{job.experience}</div>
+          <div className="">{job.jobType}</div>
+          <div className="">{job.location}</div>
         </div>
         <div>
           <Text
