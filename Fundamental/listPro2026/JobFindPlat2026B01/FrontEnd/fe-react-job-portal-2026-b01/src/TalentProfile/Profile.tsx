@@ -3,8 +3,13 @@ import { IconBriefcase, IconMapPin } from "@tabler/icons-react";
 import React from "react";
 import ExpCard from "./ExpCard";
 import CertiCard from "./CertiCard";
+import { ProfileModel } from "../Model/MockModel/ProfileModel";
 
-const Profile = () => {
+interface ProfileProps {
+  profile: ProfileModel;
+}
+
+const Profile = ({ profile }: ProfileProps) => {
   return (
     <>
       <div className="w-2/3">
@@ -18,16 +23,17 @@ const Profile = () => {
         </div>
         <div className="px-3 mt-16">
           <div className="text-3xl font-semibold flex justify-between">
-            Jarrod Wood
+            {profile.name}
             <Button color="brightSun.4" variant="outline">
               Messages
             </Button>
           </div>
           <div className="text-lg flex gap-1 items-center">
-            <IconBriefcase className="h-5 w-5" stroke={1.5} /> Software Engineer
+            <IconBriefcase className="h-5 w-5" stroke={1.5} /> {profile.role}{" "}
+            &bull; {profile.company}
           </div>
           <div className="flex gap-1 text-xs items-center text-mine-shaft-400">
-            <IconMapPin className="h-5 w-5" stroke={1.5} /> New York
+            <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile.location}
           </div>
         </div>
 
@@ -35,10 +41,7 @@ const Profile = () => {
         <div className="px-3">
           <div className="text-2xl font-semibold mb-3">About</div>
           <div className="text-sm text-mine-shaft-300 text-justify">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
-            corrupti debitis doloremque! Tempora maxime id, quidem fugit
-            asperiores natus commodi mollitia accusamus harum consequatur
-            molestias? Est omnis non vero esse.
+            {profile.about}
           </div>
         </div>
 
@@ -46,26 +49,37 @@ const Profile = () => {
         <div className="px-3">
           <div className="text-2xl font-semibold mb-3">Skills</div>
           <div className="flex flex-wrap gap-2">
-            <div className="bg-bright-sun-300 text-sm font-semibold bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1">
-              React
-            </div>
-            <div className="bg-bright-sun-300 text-sm font-semibold bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1">
-              React
-            </div>
-            <div className="bg-bright-sun-300 text-sm font-semibold bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1">
-              React
-            </div>
+            {profile.skills?.map((skill: string, index: number) => (
+              <>
+                <div className="bg-bright-sun-300 text-sm font-semibold bg-opacity-15 rounded-3xl text-bright-sun-400 px-3 py-1">
+                  {skill}
+                </div>
+              </>
+            ))}
           </div>
         </div>
         <Divider mx={`xs`} my={`xl`} />
         <div className="px-3">
           <div className="text-2xl font-semibold mb-5">Experience</div>
-          <ExpCard />
+          <div className="flex flex-col gap-8">
+            {profile.experience?.map((exp, index) => (
+              <>
+                <ExpCard experience={exp} />
+              </>
+            ))}
+          </div>
         </div>
         <Divider mx={`xs`} my={`xl`} />
         <div className="px-3">
           <div className="text-2xl font-semibold mb-5">Certifications</div>
-          <CertiCard />
+
+          <div className="flex flex-col gap-8">
+            {profile.certifications?.map((cert, index) => (
+              <>
+                <CertiCard certProp={cert} />
+              </>
+            ))}
+          </div>
         </div>
       </div>
     </>

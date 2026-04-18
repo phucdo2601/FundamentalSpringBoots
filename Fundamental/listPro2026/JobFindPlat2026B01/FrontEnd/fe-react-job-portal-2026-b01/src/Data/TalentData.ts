@@ -3,6 +3,7 @@ import {
   SearchFieldsTalentModel,
   TalentModel,
 } from "../Model/MockModel/MockTalentModel";
+import { ProfileModel } from "../Model/MockModel/ProfileModel";
 
 const searchFields: SearchFieldsTalentModel[] = [
   {
@@ -122,4 +123,53 @@ const talents: TalentModel[] = [
   },
 ];
 
-export { searchFields, talents };
+const profile = {
+  name: "Phuc Do Ngoc",
+  role: "Software Engineer",
+  company: "ABC Company",
+  location: "Viet Nam",
+  about: "I am a ",
+  skills: ["Java", "Reactjs", "React Native"],
+  experience: [
+    {
+      title: "Java Developer",
+      company: "Spotify",
+      location: "UK",
+      startDate: "2017-12-01",
+      endDate: "2019-12-31",
+      description: "test-desc-b01",
+    },
+    {
+      title: "Software Developer",
+      company: "Google",
+      location: "UK",
+      startDate: "2019-12-31",
+      endDate: "2023-12-31",
+      description: "test-desc-b02",
+    },
+    {
+      title: "Remote Software Developer",
+      company: "Amazon",
+      location: "Singapore",
+      startDate: "2024-01-31",
+      endDate: "",
+      description: "test-desc-b03",
+    },
+  ],
+  certifications: [
+    {
+      name: "Java-cert-b01",
+      issuer: "Adobe",
+      issueDate: "2019-01-01",
+      certificateId: "12312123",
+    },
+    {
+      name: "Cloud-cert-b01",
+      issuer: "Google",
+      issueDate: "2019-01-01",
+      certificateId: "12312123",
+    },
+  ],
+} as ProfileModel;
+
+export { searchFields, talents, profile };
