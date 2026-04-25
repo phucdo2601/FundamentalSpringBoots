@@ -2,6 +2,7 @@ import { Divider, Text } from "@mantine/core";
 import { IconBookmark, IconClockHour3 } from "@tabler/icons-react";
 import React from "react";
 import { MockJobModel } from "../Model/MockModel/MockJobModel";
+import { Link } from "react-router-dom";
 
 interface JobCardProps {
   job: MockJobModel;
@@ -10,7 +11,10 @@ interface JobCardProps {
 const JobCard = ({ job }: JobCardProps) => {
   return (
     <>
-      <div className="bg-mine-shaft-800 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
+      <Link
+        to={`/jobs`}
+        className="bg-mine-shaft-800 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400"
+      >
         <div className="flex justify-between">
           <div className="flex gap-2 items-center ">
             <div className="p-2 bg-mine-shaft-700 rounded-md ">
@@ -57,7 +61,7 @@ const JobCard = ({ job }: JobCardProps) => {
             {job.postedDayAgo} days ago
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
