@@ -1589,6 +1589,13 @@
     react-remove-scroll "^2.7.2"
     type-fest "^5.5.0"
 
+"@mantine/dates@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@mantine/dates/-/dates-9.1.0.tgz#2543b8059370736cb568355ab5db0162266b0bd1"
+  integrity sha512-g6BbiqUjn7RI1/n8M/9n5Gof3YvCJDjs9TcfdFUJLBc6DPPqLTCi9EPnOon9ilSJl+ceW+LGYhYOJGPkmdI76A==
+  dependencies:
+    clsx "^2.1.1"
+
 "@mantine/hooks@^9.0.2":
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-9.0.2.tgz#09d85d9c302b7cbfce5233c18b2308fa80943e36"
@@ -3905,6 +3912,11 @@ data-view-byte-offset@^1.0.1:
     call-bound "^1.0.2"
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
+
+dayjs@^1.11.20:
+  version "1.11.20"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.20.tgz#88d919fd639dc991415da5f4cb6f1b6650811938"
+  integrity sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==
 
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"
