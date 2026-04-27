@@ -24,3 +24,11 @@ export interface CertificationModel {
   issueDate: string;
   certificateId: string;
 }
+
+export interface PersonalProfileFieldModel {
+  label?: string;
+  placeholder?: string;
+  options?: string[];
+  value?: string;
+  leftSection?: any;
+}
