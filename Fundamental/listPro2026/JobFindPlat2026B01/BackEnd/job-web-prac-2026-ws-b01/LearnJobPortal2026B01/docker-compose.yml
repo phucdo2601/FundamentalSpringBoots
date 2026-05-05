@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  LearnJobPortal2026B01_mongodb:
+    image: mongo:8.0.21
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: phucdn
+      MONGO_INITDB_ROOT_PASSWORD: phucdn
+      MONGO_INITDB_DATABASE: LSpringJobPlat2026B01
+    volumes:
+      - LearnJobPortal2026B01_mongodb_data:/data/db
+
+volumes:
+  LearnJobPortal2026B01_mongodb_data:
