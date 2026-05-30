@@ -17,6 +17,6 @@ public class LoginDTO {
 	@Email(message = "{user.email.invalid}")
 	private String email;
 	@NotBlank(message = "{user.password.absent}")
-	@Pattern( regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$", message = "{user.password.invalid}")
+	@Pattern( regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_\\-])[A-Za-z\\d@$!%*?&.#_\\-]{8,15}$", message = "{user.password.invalid}")
 	private String password;
 }

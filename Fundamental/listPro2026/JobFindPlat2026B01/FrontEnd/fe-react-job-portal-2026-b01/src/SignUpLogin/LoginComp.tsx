@@ -6,11 +6,98 @@ import {
   rem,
   TextInput,
 } from "@mantine/core";
-import { IconAt, IconLock } from "@tabler/icons-react";
-import React from "react";
-import { Link } from "react-router-dom";
+import { IconAt, IconCheck, IconLock, IconX } from "@tabler/icons-react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../Services/UserService";
+import { loginValidation } from "../Services/FormValidation";
+import { notifications } from "@mantine/notifications";
+
+const form = {
+  email: "",
+  password: "",
+};
 
 const LoginComp = () => {
+  const [data, setData] = useState<{ [key: string]: string }>(form);
+  const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+  const navigate = useNavigate();
+
+  const handleChange = (event: any) => {
+    setFormError({
+      ...formError,
+      [event.target.name]: "",
+    });
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event: any) => {
+    let valid = true;
+    let newFormError: {
+      [key: string]: string;
+    } = {};
+    for (let key in data) {
+      newFormError[key] = loginValidation(key, data[key]);
+
+      if (newFormError[key]) {
+        valid = false;
+      }
+    }
+
+    setFormError(newFormError);
+
+    if (valid) {
+      loginUser(data)
+        .then((res) => {
+          console.log(res.data);
+
+          notifications.show({
+            title: "Login Successfully",
+            message: "Redirecting to Login page...",
+            withCloseButton: true,
+            icon: (
+              <IconCheck
+                style={{
+                  width: "90%",
+                  height: "90%",
+                }}
+              />
+            ),
+
+            color: "teal",
+            withBorder: true,
+            className: "!bordder-green-500",
+          });
+          setTimeout(() => {
+            navigate("/");
+          }, 4000);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          notifications.show({
+            title: "Login Failed!",
+            message: err.response.data.errorMessage,
+            withCloseButton: true,
+            icon: (
+              <IconX
+                style={{
+                  width: "90%",
+                  height: "90%",
+                }}
+              />
+            ),
+
+            color: "red",
+            withBorder: true,
+            className: "!bordder-green-500",
+          });
+        });
+    }
+  };
+
   return (
     <>
       <div className="w-1/2 px-20 flex flex-col justify-center">
@@ -27,6 +114,10 @@ const LoginComp = () => {
           }
           label="Your Email"
           placeholder="Your Email"
+          name="email"
+          value={data.email}
+          onChange={handleChange}
+          error={formError.email}
         />
         <PasswordInput
           leftSection={
@@ -40,17 +131,28 @@ const LoginComp = () => {
           }
           label="Password"
           placeholder="Password"
+          name="password"
+          value={data.password}
+          onChange={handleChange}
+          error={formError.password}
         />
 
-        <Button autoContrast variant="filled">
-          Sign Up
+        <Button autoContrast variant="filled" onClick={handleSubmit}>
+          Log In
         </Button>
 
         <div className="mx-auto">
           Don't Have and account?{" "}
-          <Link to={`/signup`} className="text-bright-sun-400">
+          <span
+            className="text-bright-sun-400 hover:underline cursor-pointer"
+            onClick={() => {
+              navigate("/signup");
+              setFormError(form);
+              setData(form);
+            }}
+          >
             Signup
-          </Link>
+          </span>
         </div>
       </div>
     </>

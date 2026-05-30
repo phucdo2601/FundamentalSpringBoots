@@ -39,7 +39,7 @@ public class ExceptionControllerAdvice {
 	public ResponseEntity<ErrorInfo> generalException(JobPortalException exception) {
 		String message = environment.getProperty(exception.getMessage());
 		ErrorInfo errorInfo = new ErrorInfo(
-				message,
+				exception.getMessage(),
 				HttpStatus.INTERNAL_SERVER_ERROR.value(),
 				LocalDateTime.now()
 				
