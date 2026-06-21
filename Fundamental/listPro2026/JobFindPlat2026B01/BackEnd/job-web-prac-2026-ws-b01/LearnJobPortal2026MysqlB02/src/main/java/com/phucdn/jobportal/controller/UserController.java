@@ -1,8 +1,12 @@
 package com.phucdn.jobportal.controller;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.phucdn.jobportal.dto.LoginDTO;
 import com.phucdn.jobportal.dto.ResponseDTO;
 import com.phucdn.jobportal.dto.UserDTO;
+import com.phucdn.jobportal.entity.OTP;
 import com.phucdn.jobportal.exception.JobPortalException;
+import com.phucdn.jobportal.repository.OTPRepository;
 import com.phucdn.jobportal.service.UserService;
 
 import jakarta.validation.Valid;
@@ -32,6 +38,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OTPRepository otpRepository;
 
 	@PostMapping("/register")
 	public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid UserDTO userDTO) throws JobPortalException {
@@ -42,8 +51,12 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<UserDTO> login(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
 		return new ResponseEntity<>(userService.loginUser(loginDTO), HttpStatus.OK);
-	}
+	} 
 	
+	@PostMapping("/changePassword")
+	public ResponseEntity<ResponseDTO> changePassword(@RequestBody @Valid LoginDTO loginDTO) throws JobPortalException {
+		return new ResponseEntity<>(userService.changePassword(loginDTO), HttpStatus.OK);
+	}
 	
 	@PostMapping("/sendOtp/{email}")
 	public ResponseEntity<ResponseDTO> sendOtp(@PathVariable @Email(message = "{user.email.invalid}") String email) throws Exception {
@@ -59,4 +72,14 @@ public class UserController {
 		return new ResponseEntity<>(new ResponseDTO("OTP has been verified!"), HttpStatus.OK);
 	}
 
+	@Scheduled(fixedRate = 3000)
+	public void removeExpiredOtp() {
+		LocalDateTime expiry = LocalDateTime.now().minusMinutes(5);
+		List<OTP> expiredOtps = otpRepository.findByCreationTimeBefore(expiry);
+		if (!expiredOtps.isEmpty()) {
+			otpRepository.deleteAll(expiredOtps);
+			System.out.println("Removed "+expiredOtps.size() +" expired!");
+		}
+		
+	}
 }

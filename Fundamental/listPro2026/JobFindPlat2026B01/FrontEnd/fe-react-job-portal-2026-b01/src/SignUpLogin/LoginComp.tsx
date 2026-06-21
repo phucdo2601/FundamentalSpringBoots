@@ -12,6 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../Services/UserService";
 import { loginValidation } from "../Services/FormValidation";
 import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
+import ResetPassword from "./ResetPassword";
 
 const form = {
   email: "",
@@ -21,6 +23,7 @@ const form = {
 const LoginComp = () => {
   const [data, setData] = useState<{ [key: string]: string }>(form);
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+  const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
   const handleChange = (event: any) => {
@@ -154,7 +157,14 @@ const LoginComp = () => {
             Signup
           </span>
         </div>
+        <div
+          onClick={open}
+          className="text-bright-sun-400 hover:underline cursor-pointer text-center"
+        >
+          Forget Password?
+        </div>
       </div>
+      <ResetPassword opened={opened} close={close} />
     </>
   );
 };

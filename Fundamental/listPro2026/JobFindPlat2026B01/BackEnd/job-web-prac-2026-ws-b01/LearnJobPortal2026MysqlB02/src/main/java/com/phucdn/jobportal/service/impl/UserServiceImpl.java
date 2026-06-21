@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.phucdn.jobportal.dto.LoginDTO;
+import com.phucdn.jobportal.dto.ResponseDTO;
 import com.phucdn.jobportal.dto.UserDTO;
 import com.phucdn.jobportal.entity.OTP;
 import com.phucdn.jobportal.entity.User;
@@ -22,6 +23,7 @@ import com.phucdn.jobportal.utility.Utilities;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.validation.Valid;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -91,6 +93,16 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		return true;
+	}
+
+	@Override
+	public ResponseDTO changePassword(@Valid LoginDTO loginDTO) throws JobPortalException {
+		User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new JobPortalException("USER_NOT_FOUND"));
+		user.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
+		userRepository.save(user);
+		
+		
+		return new ResponseDTO("Password changed successfully.");
 	}
 
 }
