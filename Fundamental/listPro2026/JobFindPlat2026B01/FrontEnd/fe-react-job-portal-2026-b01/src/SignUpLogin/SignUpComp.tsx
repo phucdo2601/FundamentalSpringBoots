@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   Group,
+  LoadingOverlay,
   PasswordInput,
   Radio,
   rem,
@@ -14,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../Services/UserService";
 import { signUpValidation } from "../Services/FormValidation";
 import { notifications } from "@mantine/notifications";
+import { errorNotification } from "../Services/NotificationService";
 
 const form = {
   name: "",
@@ -27,6 +29,8 @@ const SignUpComp = () => {
   const [data, setData] = useState<{ [key: string]: string }>(form);
 
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -98,6 +102,7 @@ const SignUpComp = () => {
     setFormError(newFormError);
 
     if (valid === true) {
+      setLoading(true);
       registerUser(data)
         .then((res) => {
           console.log(res.data);
@@ -121,34 +126,47 @@ const SignUpComp = () => {
           });
 
           setTimeout(() => {
+            setLoading(false);
             navigate("/login");
           }, 4000);
         })
         .catch((err) => {
+          setLoading(false);
           console.log(err);
-          notifications.show({
-            title: "Registered Failed!",
-            message: err.response.data.errorMessage,
-            withCloseButton: true,
-            icon: (
-              <IconX
-                style={{
-                  width: "90%",
-                  height: "90%",
-                }}
-              />
-            ),
+          // notifications.show({
+          //   title: "Registered Failed!",
+          //   message: err.response.data.errorMessage,
+          //   withCloseButton: true,
+          //   icon: (
+          //     <IconX
+          //       style={{
+          //         width: "90%",
+          //         height: "90%",
+          //       }}
+          //     />
+          //   ),
 
-            color: "red",
-            withBorder: true,
-            className: "!bordder-green-500",
-          });
+          //   color: "red",
+          //   withBorder: true,
+          //   className: "!bordder-green-500",
+          // });
+          errorNotification(
+            "Registration Failed!",
+            err.response.data.errorMessage,
+          );
         });
     }
   };
 
   return (
     <>
+      <LoadingOverlay
+        visible={loading}
+        zIndex={1000}
+        className="translate-x-1/2"
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "brightSun.4", type: "bars" }}
+      />
       <div className="w-1/2 px-20 flex flex-col justify-center gap-1">
         <div className="text-2xl font-semibold">Create Account</div>
         <TextInput
@@ -252,7 +270,12 @@ const SignUpComp = () => {
           }
         />
 
-        <Button autoContrast variant="filled" onClick={handleSubmit}>
+        <Button
+          loading={loading}
+          autoContrast
+          variant="filled"
+          onClick={handleSubmit}
+        >
           Sign Up
         </Button>
 

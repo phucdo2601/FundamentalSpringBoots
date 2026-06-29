@@ -2,6 +2,7 @@ import {
   Anchor,
   Button,
   Checkbox,
+  LoadingOverlay,
   PasswordInput,
   rem,
   TextInput,
@@ -14,6 +15,8 @@ import { loginValidation } from "../Services/FormValidation";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import ResetPassword from "./ResetPassword";
+import { useDispatch } from "react-redux";
+import { setUser } from "../ReduxConfig/Slices/UserSlice";
 
 const form = {
   email: "",
@@ -21,6 +24,9 @@ const form = {
 };
 
 const LoginComp = () => {
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
   const [data, setData] = useState<{ [key: string]: string }>(form);
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
   const [opened, { open, close }] = useDisclosure(false);
@@ -53,6 +59,7 @@ const LoginComp = () => {
     setFormError(newFormError);
 
     if (valid) {
+      setLoading(true);
       loginUser(data)
         .then((res) => {
           console.log(res.data);
@@ -75,11 +82,15 @@ const LoginComp = () => {
             className: "!bordder-green-500",
           });
           setTimeout(() => {
+            setLoading(false);
+            dispatch(setUser(res));
             navigate("/");
           }, 4000);
         })
         .catch((err) => {
           console.log(err.response.data);
+          setLoading(false);
+
           notifications.show({
             title: "Login Failed!",
             message: err.response.data.errorMessage,
@@ -103,6 +114,12 @@ const LoginComp = () => {
 
   return (
     <>
+      <LoadingOverlay
+        visible={loading}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "brightSun.4", type: "bars" }}
+      />
       <div className="w-1/2 px-20 flex flex-col justify-center">
         <div className="text-2xl font-semibold">Sign In</div>
         <TextInput
@@ -140,7 +157,12 @@ const LoginComp = () => {
           error={formError.password}
         />
 
-        <Button autoContrast variant="filled" onClick={handleSubmit}>
+        <Button
+          loading={loading}
+          autoContrast
+          variant="filled"
+          onClick={handleSubmit}
+        >
           Log In
         </Button>
 
